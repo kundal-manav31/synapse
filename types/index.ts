@@ -10,8 +10,9 @@ export interface Profile {
   streak_longest: number;
   last_played_date: string | null;
   subscription_tier: SubscriptionTier;
-  stripe_customer_id: string | null;
-  stripe_subscription_id: string | null;
+  ls_customer_id: string | null;
+  ls_subscription_id: string | null;
+  ls_portal_url: string | null;
   created_at: string;
   updated_at: string;
 }

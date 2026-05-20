@@ -12,7 +12,7 @@ const PLANS = [
     highlight: false,
     cta: 'Start free',
     href: '/play',
-    stripePlan: null as null | 'pro' | 'team',
+    lsPlan: null as null | 'pro' | 'team',
   },
   {
     name: 'Pro',
@@ -22,7 +22,7 @@ const PLANS = [
     highlight: true,
     cta: 'Upgrade to Pro',
     href: null,
-    stripePlan: 'pro' as const,
+    lsPlan: 'pro' as const,
   },
   {
     name: 'Team',
@@ -32,7 +32,7 @@ const PLANS = [
     highlight: false,
     cta: 'Get Team',
     href: null,
-    stripePlan: 'team' as const,
+    lsPlan: 'team' as const,
   },
 ];
 
@@ -80,7 +80,7 @@ const FAQ = [
   },
   {
     q: 'What payment methods are accepted?',
-    a: 'All major credit and debit cards via Stripe. Apple Pay and Google Pay are available where supported.',
+    a: 'All major credit and debit cards. Apple Pay and Google Pay are available where supported. Payments are processed securely by Lemon Squeezy.',
   },
   {
     q: 'Is there a free trial?',
@@ -147,9 +147,9 @@ export default function PricingPage() {
                 <p className="text-slate-400 text-sm">{plan.description}</p>
               </div>
 
-              {plan.stripePlan ? (
+              {plan.lsPlan ? (
                 <PricingCTA
-                  plan={plan.stripePlan}
+                  plan={plan.lsPlan}
                   label={plan.cta}
                   className={`w-full text-center py-3 rounded-full font-bold text-sm transition-colors disabled:opacity-60 ${
                     plan.highlight

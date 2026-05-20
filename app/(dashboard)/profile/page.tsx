@@ -158,7 +158,7 @@ function ProfileContent() {
   async function openPortal() {
     setPortalLoading(true);
     try {
-      const res = await fetch('/api/stripe/portal', { method: 'POST' });
+      const res = await fetch('/api/lemonsqueezy/portal', { method: 'POST' });
       const data = await res.json() as { url?: string; error?: string };
       if (data.url) window.location.href = data.url;
     } finally {
