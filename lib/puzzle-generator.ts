@@ -73,11 +73,24 @@ const COLORS = ['red', 'blue', 'green', 'yellow', 'purple'];
 function generateSpeedConfig(rand: (a: number, b: number) => number, diff: number): SpeedConfig {
   const targetColor = COLORS[rand(0, COLORS.length - 1)];
   const totalTargets = 8 + diff * 2;
+  const minTargets = 3; // guarantee at least 3 of the target color
+
+  // Assign colors: first minTargets slots are target color, rest random
+  const colors = Array.from({ length: totalTargets }, (_, i) =>
+    i < minTargets ? targetColor : COLORS[rand(0, COLORS.length - 1)]
+  );
+
+  // Fisher-Yates shuffle the color assignments using seeded RNG
+  for (let i = colors.length - 1; i > 0; i--) {
+    const j = rand(0, i);
+    [colors[i], colors[j]] = [colors[j], colors[i]];
+  }
+
   return {
-    targets: Array.from({ length: totalTargets }, () => ({
+    targets: Array.from({ length: totalTargets }, (_, i) => ({
       x: rand(5, 90),
       y: rand(10, 90),
-      color: COLORS[rand(0, COLORS.length - 1)],
+      color: colors[i],
       shape: (['circle', 'square', 'triangle'] as const)[rand(0, 2)],
     })),
     targetColor,
