@@ -77,6 +77,15 @@ export default function ResultsPage() {
     return () => clearTimeout(t);
   }, [result]);
 
+  /* ── Derived values (computed before any early return so hooks stay stable) ── */
+  const scores    = result?.scores ?? { memory: 0, speed: 0, pattern: 0, math: 0, stroop: 0 };
+  const totalScore = result?.total_score  ?? calculateCompositeScore(scores);
+  const eloBefore  = result?.elo_before   ?? 1000;
+  const eloAfter   = result?.elo_after    ?? 1000;
+  const eloChange  = result?.elo_change   ?? 0;
+  const tier       = getEloTier(eloAfter);
+  const animatedElo = useCountUp(eloAfter, eloBefore);
+
   /* ── Empty state ── */
   if (!result) {
     return (
@@ -95,18 +104,6 @@ export default function ResultsPage() {
       </div>
     );
   }
-
-  /* ── Derived values ── */
-  const scores = result.scores ?? { memory: 0, speed: 0, pattern: 0, math: 0, stroop: 0 };
-  const totalScore   = result.total_score  ?? calculateCompositeScore(scores);
-  const eloBefore    = result.elo_before   ?? 1000;
-  const eloAfter     = result.elo_after    ?? 1000;
-  const eloChange    = result.elo_change   ?? 0;
-  const tier         = getEloTier(eloAfter);
-
-  // Animated ELO value
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const animatedElo = useCountUp(eloAfter, eloBefore);
 
   return (
     <div className="flex flex-col items-center min-h-screen py-10 px-4 gap-8 max-w-lg mx-auto w-full">
